@@ -1,0 +1,2312 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="2018.3">
+  <Nodes>
+    <Node ToolID="1">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="54" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="25">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`</File>
+          <FormatSpecificOptions>
+            <FirstRowData>False</FirstRowData>
+            <ImportLine>1</ImportLine>
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>transaction</AnnotationText>
+          <DefaultAnnotationText>transaction.xlsx
+Table=`transaction$`</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="customer_id" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="V_String" />
+            <Field name="tran_id" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="Double" />
+            <Field name="tran_date" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="V_String" />
+            <Field name="tran_amount" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="Double" />
+            <Field name="merchant_name" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="V_String" />
+            <Field name="merchant_country" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="V_String" />
+            <Field name="merchant_city" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="V_String" />
+            <Field name="mcc_code" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="Double" />
+            <Field name="card_id" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction.xlsx|||`transaction$`" type="V_String" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="9">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="174" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="substring([tran_date],0,10)" field="tran_date" size="255" type="V_String" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>substring date</AnnotationText>
+          <DefaultAnnotationText><![CDATA[tran_date = substring([tran_date],0,10)
+]]></DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="11">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="246" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="tran_date" selected="True" type="Date" size="10" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>Format Date</AnnotationText>
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="12">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="318" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="DateTimeFormat([tran_date],&quot;%A&quot;) " field="day_of_week" size="1073741823" type="V_WString" />
+            <FormulaField expression="DateTimeFormat([tran_date],&quot;%B&quot;) " field="Month" size="1073741823" type="V_WString" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>Get Day of Week</AnnotationText>
+          <DefaultAnnotationText>day_of_week = DateTimeFormat([tran_date],"%A") 
+Month = DateTimeFormat([tran_dat...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="13">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="390" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="if ([day_of_week]=&quot;Saturday&quot; OR [day_of_week]=&quot;Sunday&quot;)&#xA;then 1&#xA;else 0&#xA;endif" field="dummy_weekend" size="2" type="Int16" />
+            <FormulaField expression="if ([merchant_country]=&quot;India&quot;)&#xA;then 1&#xA;else 0&#xA;endif" field="dummy_india" size="1073741823" type="V_WString" />
+            <FormulaField expression="if [merchant_city] = 'Bhubaneshwar' or 'Bhubaneswar' or 'bhubhaneshwar'&#xA;then 'bhubaneswar'&#xA;elseif [merchant_city] = 'Chandni Chowk'&#xA;then 'delhi'&#xA;elseif [merchant_city] = 'Gujarat' or 'gujurat'&#xA;then 'gujrat'&#xA;elseif [merchant_city] = 'Gurgaon'&#xA;then 'Gurugram'&#xA;elseif [merchant_city] = 'Pimpri Chinchwad'&#xA;then 'Pune'&#xA;elseif [merchant_city] = 'Visakhapatnam'&#xA;then 'Vishakapatnam'&#xA;else [merchant_city]&#xA;endif" field="merchant_city" size="255" type="V_String" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>dummy weekend</AnnotationText>
+          <DefaultAnnotationText>dummy_weekend = if ([day_of_week]="Saturday" OR [day_of_week]="Sunday")
+then 1
+e...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="14">
+      <GuiSettings>
+        <Position x="894" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="List Box (11)">"customer_id","tran_id","tran_date","tran_amount","merchant_name","merchant_country","merchant_city","mcc_code","irs_description","card_id","day_of_week","Month","dummy_weekend","dummy_india","mer_state","mer_city_grp"</Value>
+          <Value name="Check Box (84)">True</Value>
+          <Value name="Check Box (117)">True</Value>
+          <Value name="Check Box (15)">True</Value>
+          <Value name="Check Box (109)">True</Value>
+          <Value name="Check Box (122)">True</Value>
+          <Value name="Check Box (53)">False</Value>
+          <Value name="Check Box (58)">False</Value>
+          <Value name="Check Box (70)">False</Value>
+          <Value name="Check Box (77)">False</Value>
+          <Value name="Drop Down (81)">upper</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Cleanse.yxmc" />
+    </Node>
+    <Node ToolID="15">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="54" y="426" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="25">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`</File>
+          <FormatSpecificOptions>
+            <FirstRowData>False</FirstRowData>
+            <ImportLine>1</ImportLine>
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>customer_demographic</AnnotationText>
+          <DefaultAnnotationText>customer_demographics.xlsx
+Table=`customer_demographics$`</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="customer_id" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="V_String" />
+            <Field name="card_type" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="V_String" />
+            <Field name="card_id" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="V_String" />
+            <Field name="mar_status" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="V_String" />
+            <Field name="age" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="Double" />
+            <Field name="gender" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="V_String" />
+            <Field name="customer_country" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="V_String" />
+            <Field name="cr_lim_group" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="Double" />
+            <Field name="customer_city" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="V_String" />
+            <Field name="customer_id_new" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="Double" />
+            <Field name="customer_uid" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics.xlsx|||`customer_demographics$`" type="V_String" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="16">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="138" y="426" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <CommaDecimal value="False" />
+          <SelectFields>
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="17">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="234" y="426" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="if [mar_status] = &quot;M&quot;&#xA;then 1&#xA;elseif [mar_status] = &quot;S&quot;&#xA;then 0&#xA;else 2&#xA;endif" field="dummy_marital" size="2" type="Int16" />
+            <FormulaField expression="if [gender] = &quot;M&quot;&#xA;then 1&#xA;else 0&#xA;endif" field="dummy_gender" size="2" type="Int16" />
+            <FormulaField expression="if [card_type] = &quot;SILVER&quot;&#xA;then 1&#xA;elseif [card_type] = &quot;GOLD&quot;&#xA;then 2&#xA;elseif [card_type] = &quot;PLATINUM&quot;&#xA;then 3&#xA;else 0&#xA;endif" field="dummy_cardtype" size="2" type="Int16" />
+            <FormulaField expression="if [cr_lim_group] &lt;= 5000&#xA;then 1&#xA;else 0&#xA;endif" field="dummy_crlimit" size="2" type="Int16" />
+            <FormulaField expression="if [age] &lt; 10&#xA;then 0&#xA;elseif [age] &gt;= 10 and [age] &lt; 20&#xA;then 1&#xA;elseif [age] &gt;= 20 and [age] &lt; 30&#xA;then 2&#xA;elseif [age] &gt;= 30 and [age] &lt; 40&#xA;then 3&#xA;elseif [age] &gt;= 40 and [age] &lt; 50&#xA;then 4&#xA;elseif [age] &gt;= 50 and [age] &lt; 60&#xA;then 5&#xA;elseif [age] &gt;= 60 and [age] &lt; 70&#xA;then 6&#xA;elseif [age] &gt;= 70 and [age] &lt; 80&#xA;then 7&#xA;else 8&#xA;endif" field="age_group" size="2" type="Int16" />
+            <FormulaField expression="if [customer_city] = 'Bhubaneshwar' or 'Bhubaneswar' or 'bhubhaneshwar'&#xA;then 'bhubaneswar'&#xA;elseif [customer_city] = 'Chandni Chowk'&#xA;then 'delhi'&#xA;elseif [customer_city] = 'Gujarat' or 'gujurat'&#xA;then 'gujrat'&#xA;elseif [customer_city] = 'Gurgaon'&#xA;then 'Gurugram'&#xA;elseif [customer_city] = 'Pimpri Chinchwad'&#xA;then 'Pune'&#xA;elseif [customer_city] = 'Visakhapatnam'&#xA;then 'Vishakapatnam'&#xA;else [customer_city]&#xA;endif" field="customer_city" size="255" type="V_String" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText><![CDATA[dummy ]]></AnnotationText>
+          <DefaultAnnotationText>dummy_marital = if [mar_status] = "M"
+then 1
+elseif [mar_status] = "S"
+then 0
+el...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="18">
+      <GuiSettings>
+        <Position x="570" y="426" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="List Box (11)">"customer_id","card_type","card_id","mar_status","age","gender","customer_country","cr_lim_group","customer_city","customer_id_new","customer_uid","dummy_marital","dummy_gender","dummy_cardtype","dummy_crlimit","age_group"</Value>
+          <Value name="Check Box (84)">True</Value>
+          <Value name="Check Box (117)">True</Value>
+          <Value name="Check Box (15)">True</Value>
+          <Value name="Check Box (109)">False</Value>
+          <Value name="Check Box (122)">False</Value>
+          <Value name="Check Box (53)">False</Value>
+          <Value name="Check Box (58)">False</Value>
+          <Value name="Check Box (70)">False</Value>
+          <Value name="Check Box (77)">True</Value>
+          <Value name="Drop Down (81)">lower</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Cleanse.yxmc" />
+    </Node>
+    <Node ToolID="19">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="990" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File FileFormat="25" MaxRecords="">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction_1.xlsx|||transaction</File>
+          <Passwords />
+          <FormatSpecificOptions>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>transaction_1</AnnotationText>
+          <DefaultAnnotationText>transaction_1.xlsx
+Table=transaction</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="20">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="666" y="498" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File FileFormat="25" MaxRecords="">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_demographics_1.xlsx|||customer</File>
+          <Passwords />
+          <FormatSpecificOptions>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>customer_demographics_1</AnnotationText>
+          <DefaultAnnotationText>customer_demographics_1.xlsx
+Table=customer</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="21">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="990" y="330" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="customer_id" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="customer_id" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="True" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Left_customer_id" selected="True" />
+                <SelectField field="Left_tran_date" selected="True" />
+                <SelectField field="Left_tran_amount" selected="True" />
+                <SelectField field="Left_merchant_name" selected="True" />
+                <SelectField field="Left_merchant_country" selected="True" />
+                <SelectField field="Left_merchant_city" selected="True" />
+                <SelectField field="Left_mcc_code" selected="True" />
+                <SelectField field="Left_day_of_week" selected="True" />
+                <SelectField field="Left_Month" selected="True" />
+                <SelectField field="Left_dummy_weekend" selected="True" />
+                <SelectField field="Left_dummy_india" selected="True" />
+                <SelectField field="Right_customer_id" selected="False" />
+                <SelectField field="Right_card_type" selected="True" />
+                <SelectField field="Right_mar_status" selected="True" />
+                <SelectField field="Right_age" selected="True" />
+                <SelectField field="Right_gender" selected="True" />
+                <SelectField field="Right_customer_country" selected="True" />
+                <SelectField field="Right_cr_lim_group" selected="False" />
+                <SelectField field="Right_customer_city" selected="True" />
+                <SelectField field="Right_dummy_marital" selected="True" />
+                <SelectField field="Right_dummy_gender" selected="True" />
+                <SelectField field="Right_dummy_cardtype" selected="True" />
+                <SelectField field="Right_dummy_crlimit" selected="True" />
+                <SelectField field="Left_irs_description" selected="True" rename="Product_Category" />
+                <SelectField field="Left_City_Rank" selected="False" />
+                <SelectField field="Left_Population_2011" selected="False" />
+                <SelectField field="Left_Population_2001" selected="False" />
+                <SelectField field="Left_State" selected="False" />
+                <SelectField field="Left_Tier" selected="False" />
+                <SelectField field="Left_Population_Group" selected="False" />
+                <SelectField field="Left_City_group" selected="False" />
+                <SelectField field="Right_age_group" selected="True" />
+                <SelectField field="Left_mer_City_Rank" selected="False" />
+                <SelectField field="Left_mer_state" selected="True" />
+                <SelectField field="Left_mer_city_tier" selected="False" />
+                <SelectField field="Left_mer_pop_grp" selected="False" />
+                <SelectField field="Left_mer_city_grp" selected="True" />
+                <SelectField field="Right_cust_city_rank" selected="False" />
+                <SelectField field="Right_Population_2011" selected="False" />
+                <SelectField field="Right_Population_2001" selected="False" />
+                <SelectField field="Right_cust_state" selected="True" />
+                <SelectField field="Right_cust_city_tier" selected="False" />
+                <SelectField field="Right_cust_pop_grp" selected="False" />
+                <SelectField field="Right_cust_city_grp" selected="True" />
+                <SelectField field="Right_Tier" selected="False" />
+                <SelectField field="Right_Population_Group" selected="False" />
+                <SelectField field="Right_City_group" selected="False" />
+                <SelectField field="Left_required" selected="True" />
+                <SelectField field="*Unknown" selected="True" />
+                <SelectField field="Left_tran_id" selected="True" />
+                <SelectField field="Left_card_id" selected="True" />
+                <SelectField field="Right_card_id" selected="False" />
+                <SelectField field="Right_customer_id_new" selected="True" />
+                <SelectField field="Right_customer_uid" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="23">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="930" y="486" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File FileFormat="25" MaxRecords="">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\base_1.xlsx|||base_1</File>
+          <Passwords />
+          <FormatSpecificOptions>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>base_1</AnnotationText>
+          <DefaultAnnotationText>base_1.xlsx
+Table=base_1</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="24">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="1074" y="162" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File FileFormat="25" MaxRecords="">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\transaction_missing_customer.xlsx|||transaction</File>
+          <Passwords />
+          <FormatSpecificOptions>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>transaction_missing_customer</AnnotationText>
+          <DefaultAnnotationText>transaction_missing_customer.xlsx
+Table=transaction</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="25">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="918" y="570" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File FileFormat="25" MaxRecords="">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\zero_customer.xlsx|||Sheet1</File>
+          <Passwords />
+          <FormatSpecificOptions>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>zero_custome</AnnotationText>
+          <DefaultAnnotationText>zero_customer.xlsx
+Table=Sheet1</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="26">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="390" y="204" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="8">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\mcc_codes.xls|||`Sheet1$`</File>
+          <FormatSpecificOptions>
+            <FirstRowData>False</FirstRowData>
+            <NoProgress>False</NoProgress>
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>mcc_codes</AnnotationText>
+          <DefaultAnnotationText>mcc_codes.xls
+Table=`Sheet1$`</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="mcc" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\mcc_codes.xls|||`Sheet1$`" type="Double" />
+            <Field name="edited_description" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\mcc_codes.xls|||`Sheet1$`" type="V_WString" />
+            <Field name="combined_description" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\mcc_codes.xls|||`Sheet1$`" type="V_WString" />
+            <Field name="usda_description" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\mcc_codes.xls|||`Sheet1$`" type="V_WString" />
+            <Field name="irs_description" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\mcc_codes.xls|||`Sheet1$`" type="V_WString" />
+            <Field name="irs_reportable" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\mcc_codes.xls|||`Sheet1$`" type="V_WString" />
+            <Field name="required" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\mcc_codes.xls|||`Sheet1$`" type="V_WString" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="27">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="462" y="162" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="mcc_code" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="mcc" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="True" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Left_customer_id" selected="True" />
+                <SelectField field="Left_tran_id" selected="True" />
+                <SelectField field="Left_tran_date" selected="True" />
+                <SelectField field="Left_tran_amount" selected="True" />
+                <SelectField field="Left_merchant_name" selected="True" />
+                <SelectField field="Left_merchant_country" selected="True" />
+                <SelectField field="Left_merchant_city" selected="True" />
+                <SelectField field="Left_mcc_code" selected="True" />
+                <SelectField field="Right_irs_description" selected="True" />
+                <SelectField field="Left_card_id" selected="True" />
+                <SelectField field="Left_day_of_week" selected="True" />
+                <SelectField field="Left_Month" selected="True" />
+                <SelectField field="Left_dummy_weekend" selected="True" />
+                <SelectField field="Left_dummy_india" selected="True" />
+                <SelectField field="Right_mcc" selected="False" />
+                <SelectField field="Right_edited_description" selected="False" />
+                <SelectField field="Right_combined_description" selected="False" />
+                <SelectField field="Right_usda_description" selected="False" />
+                <SelectField field="Right_irs_reportable" selected="False" />
+                <SelectField field="Right_required" selected="True" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="28">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Union.Union">
+        <Position x="558" y="162" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <ByName_ErrorMode>Warning</ByName_ErrorMode>
+          <ByName_OutputMode>All</ByName_OutputMode>
+          <Mode>ByName</Mode>
+          <SetOutputOrder value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxUnion" />
+    </Node>
+    <Node ToolID="30">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="810" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="IF &#xA;IsNull([irs_description])&#xA;then &quot;NA&quot;&#xA;else [irs_description]&#xA;endif&#xA;" field="irs_description" size="255" type="V_WString" />
+            <FormulaField expression="IF &#xA;IsNull([mer_city_grp])&#xA;then 0&#xA;else [mer_city_grp]&#xA;endif" field="mer_city_grp" size="8" type="Double" />
+            <FormulaField expression="IF &#xA;IsNull([mer_state])&#xA;then &quot;NA&quot;&#xA;else [mer_state]&#xA;endif&#xA;" field="mer_state" size="255" type="V_String" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText />
+          <DefaultAnnotationText>irs_description = IF 
+IsNull([irs_description])
+then "NA"
+else [irs_description]...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="31">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="534" y="282" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords />
+          <File OutputFileName="" RecordLimit="" SearchSubDirs="False" FileFormat="25">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`</File>
+          <FormatSpecificOptions>
+            <FirstRowData>False</FirstRowData>
+            <ImportLine>1</ImportLine>
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>City_details</AnnotationText>
+          <DefaultAnnotationText>City_details.xlsx
+Table=`Sheet1$`</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="Mark" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`" type="V_String" />
+            <Field name="Rank" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`" type="Double" />
+            <Field name="Population_2011" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`" type="Double" />
+            <Field name="Population_2001" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`" type="Double" />
+            <Field name="State" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`" type="V_String" />
+            <Field name="Tier" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`" type="Double" />
+            <Field name="Population_Group" size="255" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`" type="V_String" />
+            <Field name="City_group" source="File: C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\City_details.xlsx|||`Sheet1$`" type="Double" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="32">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="618" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="merchant_city" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="Mark" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Right_Mark" selected="False" />
+                <SelectField field="Right_Rank" selected="False" rename="mer_City_Rank" />
+                <SelectField field="Right_Population_2011" selected="False" />
+                <SelectField field="Right_Population_2001" selected="False" />
+                <SelectField field="Right_State" selected="True" rename="mer_state" />
+                <SelectField field="Right_Tier" selected="False" rename="mer_city_tier" />
+                <SelectField field="Right_Population_Group" selected="False" rename="mer_pop_grp" />
+                <SelectField field="Right_City_group" selected="True" rename="mer_city_grp" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>transaction</AnnotationText>
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="33">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Union.Union">
+        <Position x="726" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <ByName_ErrorMode>Warning</ByName_ErrorMode>
+          <ByName_OutputMode>All</ByName_OutputMode>
+          <Mode>ByName</Mode>
+          <SetOutputOrder value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxUnion" />
+    </Node>
+    <Node ToolID="87">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.JoinMultiple.JoinMultiple">
+        <Position x="2358" y="642" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <JoinByRecPos value="False" />
+          <JoinFields>
+            <JoinInfo connection="#4">
+              <Field field="customer_id" />
+            </JoinInfo>
+            <JoinInfo connection="#2">
+              <Field field="customer_id" />
+            </JoinInfo>
+            <JoinInfo connection="#3">
+              <Field field="customer_id" />
+            </JoinInfo>
+            <JoinInfo connection="#1">
+              <Field field="customer_id" />
+            </JoinInfo>
+          </JoinFields>
+          <CartesianMode>Error</CartesianMode>
+          <OutputJoinOnly value="False" />
+          <SelectConfiguration>
+            <Configuration outputConnection="Output">
+              <OrderChanged value="True" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Input_#1_Cluster" selected="True" />
+                <SelectField field="Input_#1_age" selected="True" />
+                <SelectField field="Input_#1_age_group" selected="True" />
+                <SelectField field="Input_#1_gender" selected="True" />
+                <SelectField field="Input_#1_dummy_marital" selected="True" />
+                <SelectField field="Input_#1_mar_status" selected="True" />
+                <SelectField field="Input_#1_dummy_cardtype" selected="True" />
+                <SelectField field="Input_#4_cust_city_grp" selected="True" />
+                <SelectField field="Input_#1_customer_id" selected="True" />
+                <SelectField field="Input_#1_customer_amount" selected="True" />
+                <SelectField field="Input_#1_customer_frequency" selected="True" />
+                <SelectField field="Input_#1_Product_Variety" selected="True" />
+                <SelectField field="Input_#1_travel_city_count" selected="True" />
+                <SelectField field="Input_#1_weekend_count" selected="True" />
+                <SelectField field="Input_#4_0" selected="True" />
+                <SelectField field="Input_#4_1" selected="True" />
+                <SelectField field="Input_#4_2" selected="True" />
+                <SelectField field="Input_#1_card_type" selected="True" />
+                <SelectField field="Input_#2_customer_id" selected="False" />
+                <SelectField field="Input_#2_April" selected="True" />
+                <SelectField field="Input_#2_August" selected="True" />
+                <SelectField field="Input_#2_February" selected="True" />
+                <SelectField field="Input_#2_January" selected="True" />
+                <SelectField field="Input_#2_July" selected="True" />
+                <SelectField field="Input_#2_June" selected="True" />
+                <SelectField field="Input_#2_March" selected="True" />
+                <SelectField field="Input_#2_May" selected="True" />
+                <SelectField field="Input_#2_November" selected="True" />
+                <SelectField field="Input_#2_October" selected="True" />
+                <SelectField field="Input_#2_September" selected="True" />
+                <SelectField field="Input_#3_customer_id" selected="False" />
+                <SelectField field="Input_#4_customer_id" selected="False" />
+                <SelectField field="Input_#3_1001" selected="True" />
+                <SelectField field="Input_#3_1002" selected="True" />
+                <SelectField field="Input_#3_1003" selected="True" />
+                <SelectField field="Input_#3_1004" selected="True" />
+                <SelectField field="Input_#3_1006" selected="True" />
+                <SelectField field="Input_#3_3014" selected="True" />
+                <SelectField field="Input_#3_3017" selected="True" />
+                <SelectField field="Input_#3_3055" selected="True" />
+                <SelectField field="Input_#3_3086" selected="True" />
+                <SelectField field="Input_#3_3097" selected="True" />
+                <SelectField field="Input_#3_3105" selected="True" />
+                <SelectField field="Input_#3_3124" selected="True" />
+                <SelectField field="Input_#3_3125" selected="True" />
+                <SelectField field="Input_#3_3130" selected="True" />
+                <SelectField field="Input_#3_3132" selected="True" />
+                <SelectField field="Input_#3_3149" selected="True" />
+                <SelectField field="Input_#3_3159" selected="True" />
+                <SelectField field="Input_#3_3160" selected="True" />
+                <SelectField field="Input_#3_3179" selected="True" />
+                <SelectField field="Input_#3_3211" selected="True" />
+                <SelectField field="Input_#3_3235" selected="True" />
+                <SelectField field="Input_#3_3242" selected="True" />
+                <SelectField field="Input_#3_3259" selected="True" />
+                <SelectField field="Input_#3_3356" selected="True" />
+                <SelectField field="Input_#3_3357" selected="True" />
+                <SelectField field="Input_#3_3365" selected="True" />
+                <SelectField field="Input_#3_3370" selected="True" />
+                <SelectField field="Input_#3_3383" selected="True" />
+                <SelectField field="Input_#3_3405" selected="True" />
+                <SelectField field="Input_#3_3413" selected="True" />
+                <SelectField field="Input_#3_3419" selected="True" />
+                <SelectField field="Input_#3_3421" selected="True" />
+                <SelectField field="Input_#3_3438" selected="True" />
+                <SelectField field="Input_#3_3502" selected="True" />
+                <SelectField field="Input_#3_3508" selected="True" />
+                <SelectField field="Input_#3_3514" selected="True" />
+                <SelectField field="Input_#3_3522" selected="True" />
+                <SelectField field="Input_#3_3528" selected="True" />
+                <SelectField field="Input_#3_3550" selected="True" />
+                <SelectField field="Input_#3_3570" selected="True" />
+                <SelectField field="Input_#3_3605" selected="True" />
+                <SelectField field="Input_#3_3627" selected="True" />
+                <SelectField field="Input_#3_3640" selected="True" />
+                <SelectField field="Input_#3_3653" selected="True" />
+                <SelectField field="Input_#3_3659" selected="True" />
+                <SelectField field="Input_#3_3661" selected="True" />
+                <SelectField field="Input_#3_3686" selected="True" />
+                <SelectField field="Input_#3_3711" selected="True" />
+                <SelectField field="Input_#3_3712" selected="True" />
+                <SelectField field="Input_#3_3717" selected="True" />
+                <SelectField field="Input_#3_3749" selected="True" />
+                <SelectField field="Input_#3_3767" selected="True" />
+                <SelectField field="Input_#3_3774" selected="True" />
+                <SelectField field="Input_#3_3835" selected="True" />
+                <SelectField field="Input_#3_4121" selected="True" />
+                <SelectField field="Input_#3_5200" selected="True" />
+                <SelectField field="Input_#3_5211" selected="True" />
+                <SelectField field="Input_#3_5231" selected="True" />
+                <SelectField field="Input_#3_5251" selected="True" />
+                <SelectField field="Input_#3_5261" selected="True" />
+                <SelectField field="Input_#3_5271" selected="True" />
+                <SelectField field="Input_#3_5300" selected="True" />
+                <SelectField field="Input_#3_5309" selected="True" />
+                <SelectField field="Input_#3_5310" selected="True" />
+                <SelectField field="Input_#3_5311" selected="True" />
+                <SelectField field="Input_#3_5331" selected="True" />
+                <SelectField field="Input_#3_5399" selected="True" />
+                <SelectField field="Input_#3_5411" selected="True" />
+                <SelectField field="Input_#3_5422" selected="True" />
+                <SelectField field="Input_#3_5441" selected="True" />
+                <SelectField field="Input_#3_5451" selected="True" />
+                <SelectField field="Input_#3_5462" selected="True" />
+                <SelectField field="Input_#3_5499" selected="True" />
+                <SelectField field="Input_#3_5611" selected="True" />
+                <SelectField field="Input_#3_5621" selected="True" />
+                <SelectField field="Input_#3_5631" selected="True" />
+                <SelectField field="Input_#3_5641" selected="True" />
+                <SelectField field="Input_#3_5651" selected="True" />
+                <SelectField field="Input_#3_5655" selected="True" />
+                <SelectField field="Input_#3_5661" selected="True" />
+                <SelectField field="Input_#3_5681" selected="True" />
+                <SelectField field="Input_#3_5691" selected="True" />
+                <SelectField field="Input_#3_5697" selected="True" />
+                <SelectField field="Input_#3_5698" selected="True" />
+                <SelectField field="Input_#3_5699" selected="True" />
+                <SelectField field="Input_#3_5713" selected="True" />
+                <SelectField field="Input_#3_5714" selected="True" />
+                <SelectField field="Input_#3_5718" selected="True" />
+                <SelectField field="Input_#3_5719" selected="True" />
+                <SelectField field="Input_#3_5722" selected="True" />
+                <SelectField field="Input_#3_5732" selected="True" />
+                <SelectField field="Input_#3_5733" selected="True" />
+                <SelectField field="Input_#3_5734" selected="True" />
+                <SelectField field="Input_#3_5735" selected="True" />
+                <SelectField field="Input_#3_5811" selected="True" />
+                <SelectField field="Input_#3_5812" selected="True" />
+                <SelectField field="Input_#3_5813" selected="True" />
+                <SelectField field="Input_#3_5814" selected="True" />
+                <SelectField field="Input_#3_5815" selected="True" />
+                <SelectField field="Input_#3_5816" selected="True" />
+                <SelectField field="Input_#3_5817" selected="True" />
+                <SelectField field="Input_#3_5818" selected="True" />
+                <SelectField field="Input_#3_5832" selected="True" />
+                <SelectField field="Input_#3_5931" selected="True" />
+                <SelectField field="Input_#3_5932" selected="True" />
+                <SelectField field="Input_#3_5933" selected="True" />
+                <SelectField field="Input_#3_5935" selected="True" />
+                <SelectField field="Input_#3_5937" selected="True" />
+                <SelectField field="Input_#3_5941" selected="True" />
+                <SelectField field="Input_#3_5942" selected="True" />
+                <SelectField field="Input_#3_5943" selected="True" />
+                <SelectField field="Input_#3_5944" selected="True" />
+                <SelectField field="Input_#3_5946" selected="True" />
+                <SelectField field="Input_#3_5947" selected="True" />
+                <SelectField field="Input_#3_5949" selected="True" />
+                <SelectField field="Input_#3_5950" selected="True" />
+                <SelectField field="Input_#3_5960" selected="True" />
+                <SelectField field="Input_#3_5961" selected="True" />
+                <SelectField field="Input_#3_5962" selected="True" />
+                <SelectField field="Input_#3_5963" selected="True" />
+                <SelectField field="Input_#3_5964" selected="True" />
+                <SelectField field="Input_#3_5966" selected="True" />
+                <SelectField field="Input_#3_5967" selected="True" />
+                <SelectField field="Input_#3_5968" selected="True" />
+                <SelectField field="Input_#3_5969" selected="True" />
+                <SelectField field="Input_#3_5970" selected="True" />
+                <SelectField field="Input_#3_5971" selected="True" />
+                <SelectField field="Input_#3_5972" selected="True" />
+                <SelectField field="Input_#3_5973" selected="True" />
+                <SelectField field="Input_#3_5975" selected="True" />
+                <SelectField field="Input_#3_5976" selected="True" />
+                <SelectField field="Input_#3_5977" selected="True" />
+                <SelectField field="Input_#3_5983" selected="True" />
+                <SelectField field="Input_#3_5992" selected="True" />
+                <SelectField field="Input_#3_5993" selected="True" />
+                <SelectField field="Input_#3_5994" selected="True" />
+                <SelectField field="Input_#3_5996" selected="True" />
+                <SelectField field="Input_#3_5997" selected="True" />
+                <SelectField field="Input_#3_5999" selected="True" />
+                <SelectField field="Input_#3_7210" selected="True" />
+                <SelectField field="Input_#3_7211" selected="True" />
+                <SelectField field="Input_#3_7216" selected="True" />
+                <SelectField field="Input_#3_7217" selected="True" />
+                <SelectField field="Input_#3_7221" selected="True" />
+                <SelectField field="Input_#3_7230" selected="True" />
+                <SelectField field="Input_#3_7251" selected="True" />
+                <SelectField field="Input_#3_7261" selected="True" />
+                <SelectField field="Input_#3_7273" selected="True" />
+                <SelectField field="Input_#3_7276" selected="True" />
+                <SelectField field="Input_#3_7277" selected="True" />
+                <SelectField field="Input_#3_7278" selected="True" />
+                <SelectField field="Input_#3_7296" selected="True" />
+                <SelectField field="Input_#3_7297" selected="True" />
+                <SelectField field="Input_#3_7298" selected="True" />
+                <SelectField field="Input_#3_7299" selected="True" />
+                <SelectField field="Input_#3_7800" selected="True" />
+                <SelectField field="Input_#3_7801" selected="True" />
+                <SelectField field="Input_#3_7802" selected="True" />
+                <SelectField field="Input_#3_7832" selected="True" />
+                <SelectField field="Input_#3_7841" selected="True" />
+                <SelectField field="Input_#3_7911" selected="True" />
+                <SelectField field="Input_#3_7922" selected="True" />
+                <SelectField field="Input_#3_7929" selected="True" />
+                <SelectField field="Input_#3_7932" selected="True" />
+                <SelectField field="Input_#3_7933" selected="True" />
+                <SelectField field="Input_#3_7941" selected="True" />
+                <SelectField field="Input_#3_7991" selected="True" />
+                <SelectField field="Input_#3_7992" selected="True" />
+                <SelectField field="Input_#3_7993" selected="True" />
+                <SelectField field="Input_#3_7994" selected="True" />
+                <SelectField field="Input_#3_7995" selected="True" />
+                <SelectField field="Input_#3_7996" selected="True" />
+                <SelectField field="Input_#3_7997" selected="True" />
+                <SelectField field="Input_#3_7998" selected="True" />
+                <SelectField field="Input_#3_7999" selected="True" />
+                <SelectField field="Input_#1_Product_Variety2" selected="True" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoinMultiple" />
+    </Node>
+    <Node ToolID="88">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="2502" y="762" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File FileFormat="25" MaxRecords="">C:\Vibhaas\personal\Data Science Study\Projects\Hackathon\Shaastra IIT M\Data\customer_purchase_summary_1.xlsx|||customer spent</File>
+          <Passwords />
+          <FormatSpecificOptions>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>customer_purchase_summary_1.xlsx
+Table=customer spent</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="89">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2514" y="882" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_7257dd893c074f44a69e5e1fd2ecb050_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="90">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Join.Join">
+        <Position x="630" y="342" />
+      </GuiSettings>
+      <Properties>
+        <Configuration joinByRecordPos="False">
+          <JoinInfo connection="Left">
+            <Field field="customer_city" />
+          </JoinInfo>
+          <JoinInfo connection="Right">
+            <Field field="Mark" />
+          </JoinInfo>
+          <SelectConfiguration>
+            <Configuration outputConnection="Join">
+              <OrderChanged value="False" />
+              <CommaDecimal value="False" />
+              <SelectFields>
+                <SelectField field="Left_cr_lim_group" selected="False" />
+                <SelectField field="Right_Mark" selected="False" />
+                <SelectField field="Right_Rank" selected="False" rename="cust_city_rank" />
+                <SelectField field="Right_Population_2011" selected="False" />
+                <SelectField field="Right_Population_2001" selected="False" />
+                <SelectField field="Right_State" selected="True" rename="cust_state" />
+                <SelectField field="Right_Tier" selected="False" rename="cust_city_tier" />
+                <SelectField field="Right_Population_Group" selected="False" rename="cust_pop_grp" />
+                <SelectField field="Right_City_group" selected="True" rename="cust_city_grp" />
+                <SelectField field="*Unknown" selected="True" />
+              </SelectFields>
+            </Configuration>
+          </SelectConfiguration>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>Customer</AnnotationText>
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoin" />
+    </Node>
+    <Node ToolID="91">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="810" y="342" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField expression="IF &#xA;IsNull([cust_city_grp])&#xA;then 0&#xA;else [cust_city_grp]&#xA;endif" field="cust_city_grp" size="8" type="Double" />
+            <FormulaField expression="IF &#xA;IsNull([cust_state])&#xA;then &quot;NA&quot;&#xA;else [cust_state]&#xA;endif&#xA;" field="cust_state" size="255" type="V_String" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText />
+          <DefaultAnnotationText>cust_city_grp = IF 
+IsNull([cust_city_grp])
+then 0
+else [cust_city_grp]
+endif
+cu...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="92">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="1170" y="666" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="customer_id" action="GroupBy" rename="customer_id" />
+            <SummarizeField field="cust_city_grp" action="GroupBy" rename="cust_city_grp" />
+            <SummarizeField field="mer_city_grp" action="GroupBy" rename="mer_city_grp" />
+            <SummarizeField field="tran_amount" action="Sum" rename="Sum_tran_amount" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText>city</AnnotationText>
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="93">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.CrossTab.CrossTab">
+        <Position x="1266" y="666" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <GroupFields>
+            <Field field="customer_id" />
+            <Field field="cust_city_grp" />
+          </GroupFields>
+          <HeaderField field="mer_city_grp" />
+          <DataField field="Sum_tran_amount" />
+          <Methods>
+            <Method method="Sum" />
+          </Methods>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="customer_id" size="255" source="CrossTab:Group:Sum:" type="V_String" />
+            <Field name="cust_city_grp" source="CrossTab:Group:Sum:" type="Double" />
+            <Field name="0" source="CrossTab:Header:mer_city_grp:0:Sum:" type="Double" />
+            <Field name="1" source="CrossTab:Header:mer_city_grp:1:Sum:" type="Double" />
+            <Field name="2" source="CrossTab:Header:mer_city_grp:2:Sum:" type="Double" />
+          </RecordInfo>
+          <SortInfo>
+            <Field field="customer_id" order="Asc" />
+            <Field field="cust_city_grp" order="Asc" />
+          </SortInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxCrossTab" />
+    </Node>
+    <Node ToolID="94">
+      <GuiSettings>
+        <Position x="1350" y="666" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="List Box (11)">"customer_id","cust_city_grp","0","1","2"</Value>
+          <Value name="Check Box (84)">True</Value>
+          <Value name="Check Box (117)">True</Value>
+          <Value name="Check Box (15)">True</Value>
+          <Value name="Check Box (109)">False</Value>
+          <Value name="Check Box (122)">False</Value>
+          <Value name="Check Box (53)">False</Value>
+          <Value name="Check Box (58)">False</Value>
+          <Value name="Check Box (70)">False</Value>
+          <Value name="Check Box (77)">False</Value>
+          <Value name="Drop Down (81)">upper</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Cleanse.yxmc" />
+    </Node>
+    <Node ToolID="95">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Union.Union">
+        <Position x="726" y="342" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <ByName_ErrorMode>Warning</ByName_ErrorMode>
+          <ByName_OutputMode>All</ByName_OutputMode>
+          <Mode>ByName</Mode>
+          <SetOutputOrder value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxUnion" />
+    </Node>
+    <Node ToolID="39">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1290" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_f662c34dd42c4c479ec35df0e25cc3e4_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="96">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="2514" y="606" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Cluster" action="GroupBy" rename="Cluster" />
+            <SummarizeField field="age" action="Avg" rename="Avg_age" />
+            <SummarizeField field="age_group" action="Avg" rename="Avg_age_group" />
+            <SummarizeField field="gender" action="Avg" rename="Avg_gender" />
+            <SummarizeField field="dummy_marital" action="Avg" rename="Avg_dummy_marital" />
+            <SummarizeField field="customer_amount" action="Avg" rename="Avg_customer_amount" />
+            <SummarizeField field="customer_frequency" action="Avg" rename="Avg_customer_frequency" />
+            <SummarizeField field="Product_Variety" action="Avg" rename="Avg_Product_Variety" />
+            <SummarizeField field="travel_city_count" action="Avg" rename="Avg_travel_city_count" />
+            <SummarizeField field="weekend_count" action="Avg" rename="Avg_weekend_count" />
+            <SummarizeField field="dummy_cardtype" action="Avg" rename="Avg_dummy_cardtype" />
+            <SummarizeField field="dummy_marital" action="Avg" rename="Avg_dummy_marital" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="97">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2622" y="606" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_4c795a48aead4c90a0bd742d73daa352_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Profile</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="98">
+      <GuiSettings>
+        <Position x="1566" y="150" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Value name="the fields">age + gender + dummy_cardtype + dummy_marital</Value>
+          <Value name="standardize">False</Value>
+          <Value name="z score">True</Value>
+          <Value name="unit interval">False</Value>
+          <Value name="k-means">True</Value>
+          <Value name="k-medians">False</Value>
+          <Value name="neural gas">False</Value>
+          <Value name="min clus">2</Value>
+          <Value name="max clus">7</Value>
+          <Value name="bootstrap rep">50</Value>
+          <Value name="num seeds">3</Value>
+          <Value name="inches">True</Value>
+          <Value name="in.w">5.50</Value>
+          <Value name="in.h">5.50</Value>
+          <Value name="centimeters">False</Value>
+          <Value name="cm.w">13.00</Value>
+          <Value name="cm.h">14.95</Value>
+          <Value name="graph.resolution">1x</Value>
+          <Value name="pointsize">10</Value>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings Macro="Predictive Tools\K-Centroids_Diagnostics.yxmc" />
+    </Node>
+    <Node ToolID="99">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="1638" y="150" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_6e30ebe582ec4270bd4e89d7adc27fb9_.yxdb</TempFile>
+          <TempFileDataProfiling />
+          <Layout>
+            <ViewMode>Single</ViewMode>
+            <ViewSize value="100" />
+            <View1>
+              <DefaultTab>Report</DefaultTab>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+            <View2 />
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="57">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="1986" y="306" width="312" height="216" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Clustering 5</Caption>
+          <Style TextColor="#314c4a" FillColor="#ecf2f2" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="False" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="100">
+          <GuiSettings>
+            <Position x="2011" y="350" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Value name="model name">K4 predt</Value>
+              <Value name="the fields">age + gender + dummy_cardtype + dummy_marital</Value>
+              <Value name="standardize">False</Value>
+              <Value name="z score">True</Value>
+              <Value name="unit interval">False</Value>
+              <Value name="k-means">True</Value>
+              <Value name="k-medians">False</Value>
+              <Value name="neural gas">False</Value>
+              <Value name="num clus">3</Value>
+              <Value name="num seeds">10</Value>
+              <Value name="plot points">True</Value>
+              <Value name="plot centroids">False</Value>
+              <Value name="max comp">2</Value>
+              <Value name="inches">True</Value>
+              <Value name="in.w">5.50</Value>
+              <Value name="in.h">5.50</Value>
+              <Value name="centimeters">False</Value>
+              <Value name="cm.w">13.00</Value>
+              <Value name="cm.h">14.95</Value>
+              <Value name="graph.resolution">1x</Value>
+              <Value name="pointsize">10</Value>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+            <MetaInfo connection="Output">
+              <RecordInfo>
+                <Field name="grp" size="1073741823" source="R-DATA:" type="V_WString" />
+                <Field name="out" size="1073741823" source="R-DATA:" type="V_WString" />
+              </RecordInfo>
+            </MetaInfo>
+            <MetaInfo connection="Reports">
+              <RecordInfo>
+                <Field name="Desc" size="64" source="Formula: (Multiple Sources)" type="V_WString" />
+                <Field name="Report" size="1073741823" source="Report: (Multiple Sources)" type="V_WString" />
+                <Field name="Sum_Dists" size="1073741823" source="R-DATA:" type="V_WString" />
+              </RecordInfo>
+            </MetaInfo>
+          </Properties>
+          <EngineSettings Macro="Predictive Tools\K-Centroids_Cluster_Analysis.yxmc" />
+        </Node>
+        <Node ToolID="101">
+          <GuiSettings>
+            <Position x="2094" y="438" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Value name="clus name">Cluster</Value>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+            <MetaInfo connection="Output">
+              <RecordInfo>
+                <Field name="customer_id" size="1073741823" source="R-DATA:" type="V_WString" />
+                <Field name="age" source="R-DATA:" type="Double" />
+                <Field name="age_group" source="R-DATA:" type="Int32" />
+                <Field name="gender" source="R-DATA:" type="Int32" />
+                <Field name="mar_status" size="1073741823" source="R-DATA:" type="V_WString" />
+                <Field name="card_type" size="1073741823" source="R-DATA:" type="V_WString" />
+                <Field name="customer_amount" source="R-DATA:" type="Double" />
+                <Field name="customer_frequency" source="R-DATA:" type="Double" />
+                <Field name="Product_Variety" source="R-DATA:" type="Double" />
+                <Field name="Product_Variety2" source="R-DATA:" type="Double" />
+                <Field name="travel_city_count" source="R-DATA:" type="Double" />
+                <Field name="weekend_count" source="R-DATA:" type="Double" />
+                <Field name="dummy_cardtype" source="R-DATA:" type="Int32" />
+                <Field name="dummy_marital" source="R-DATA:" type="Int32" />
+                <Field name="Cluster" source="R-DATA:" type="Int32" />
+              </RecordInfo>
+            </MetaInfo>
+          </Properties>
+          <EngineSettings Macro="Predictive Tools\Append_Cluster.yxmc" />
+        </Node>
+        <Node ToolID="103">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="2118" y="366" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_74f89fd65fb34bb18052d977861e87fe_.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Report</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="102">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="2214" y="426" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_65c04e6e005a47618ac4b42e36825ca6_.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Profile</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="35">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="1133" y="298.0001" width="721" height="311.9999" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Aggregation</Caption>
+          <Style TextColor="#314c4a" FillColor="#ffd5d5" BorderColor="#314c4a" Transparency="25" Margin="25" />
+          <Disabled value="False" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="34">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="1158" y="342.0001" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="customer_id" action="GroupBy" rename="customer_id" />
+                <SummarizeField field="age" action="Max" rename="age" />
+                <SummarizeField field="age_group" action="Max" rename="age_group" />
+                <SummarizeField field="dummy_gender" action="Max" rename="gender" />
+                <SummarizeField field="mar_status" action="Max" rename="mar_status" />
+                <SummarizeField field="card_type" action="Max" rename="card_type" />
+                <SummarizeField field="tran_amount" action="Sum" rename="customer_amount" />
+                <SummarizeField field="tran_id" action="Count" rename="customer_frequency" />
+                <SummarizeField field="Product_Category" action="CountDistinct" rename="Product_Variety" />
+                <SummarizeField field="mcc_code" action="CountDistinct" rename="Product_Variety2" />
+                <SummarizeField field="merchant_city" action="CountDistinct" rename="travel_city_count" />
+                <SummarizeField field="dummy_weekend" action="Sum" rename="weekend_count" />
+                <SummarizeField field="dummy_cardtype" action="Max" rename="dummy_cardtype" />
+                <SummarizeField field="dummy_marital" action="Max" rename="dummy_marital" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <AnnotationText>customer_profile</AnnotationText>
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="36">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="1170" y="426" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="customer_id" action="GroupBy" rename="customer_id" />
+                <SummarizeField field="Month" action="GroupBy" rename="Month" />
+                <SummarizeField field="tran_id" action="Count" rename="month_trans_count" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <AnnotationText>Monthly Spent</AnnotationText>
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="37">
+          <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+            <Position x="1170" y="510.0001" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <SummarizeFields>
+                <SummarizeField field="customer_id" action="GroupBy" rename="customer_id" />
+                <SummarizeField field="mcc_code" action="GroupBy" rename="mcc_code" />
+                <SummarizeField field="tran_id" action="CountDistinct" rename="Trans_count" />
+              </SummarizeFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <AnnotationText>Product interest</AnnotationText>
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+        </Node>
+        <Node ToolID="38">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.CrossTab.CrossTab">
+            <Position x="1254" y="510" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <GroupFields>
+                <Field field="customer_id" />
+              </GroupFields>
+              <HeaderField field="mcc_code" />
+              <DataField field="Trans_count" />
+              <Methods>
+                <Method method="Sum" />
+              </Methods>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+            <MetaInfo connection="Output">
+              <RecordInfo>
+                <Field name="customer_id" size="255" source="CrossTab:Group:Sum:" type="V_String" />
+                <Field name="1001" source="CrossTab:Header:mcc_code:1001:Sum:" type="Int64" />
+                <Field name="1002" source="CrossTab:Header:mcc_code:1002:Sum:" type="Int64" />
+                <Field name="1003" source="CrossTab:Header:mcc_code:1003:Sum:" type="Int64" />
+                <Field name="1004" source="CrossTab:Header:mcc_code:1004:Sum:" type="Int64" />
+                <Field name="1006" source="CrossTab:Header:mcc_code:1006:Sum:" type="Int64" />
+                <Field name="3014" source="CrossTab:Header:mcc_code:3014:Sum:" type="Int64" />
+                <Field name="3017" source="CrossTab:Header:mcc_code:3017:Sum:" type="Int64" />
+                <Field name="3055" source="CrossTab:Header:mcc_code:3055:Sum:" type="Int64" />
+                <Field name="3086" source="CrossTab:Header:mcc_code:3086:Sum:" type="Int64" />
+                <Field name="3097" source="CrossTab:Header:mcc_code:3097:Sum:" type="Int64" />
+                <Field name="3105" source="CrossTab:Header:mcc_code:3105:Sum:" type="Int64" />
+                <Field name="3124" source="CrossTab:Header:mcc_code:3124:Sum:" type="Int64" />
+                <Field name="3125" source="CrossTab:Header:mcc_code:3125:Sum:" type="Int64" />
+                <Field name="3130" source="CrossTab:Header:mcc_code:3130:Sum:" type="Int64" />
+                <Field name="3132" source="CrossTab:Header:mcc_code:3132:Sum:" type="Int64" />
+                <Field name="3149" source="CrossTab:Header:mcc_code:3149:Sum:" type="Int64" />
+                <Field name="3159" source="CrossTab:Header:mcc_code:3159:Sum:" type="Int64" />
+                <Field name="3160" source="CrossTab:Header:mcc_code:3160:Sum:" type="Int64" />
+                <Field name="3179" source="CrossTab:Header:mcc_code:3179:Sum:" type="Int64" />
+                <Field name="3211" source="CrossTab:Header:mcc_code:3211:Sum:" type="Int64" />
+                <Field name="3235" source="CrossTab:Header:mcc_code:3235:Sum:" type="Int64" />
+                <Field name="3242" source="CrossTab:Header:mcc_code:3242:Sum:" type="Int64" />
+                <Field name="3259" source="CrossTab:Header:mcc_code:3259:Sum:" type="Int64" />
+                <Field name="3356" source="CrossTab:Header:mcc_code:3356:Sum:" type="Int64" />
+                <Field name="3357" source="CrossTab:Header:mcc_code:3357:Sum:" type="Int64" />
+                <Field name="3365" source="CrossTab:Header:mcc_code:3365:Sum:" type="Int64" />
+                <Field name="3370" source="CrossTab:Header:mcc_code:3370:Sum:" type="Int64" />
+                <Field name="3383" source="CrossTab:Header:mcc_code:3383:Sum:" type="Int64" />
+                <Field name="3405" source="CrossTab:Header:mcc_code:3405:Sum:" type="Int64" />
+                <Field name="3413" source="CrossTab:Header:mcc_code:3413:Sum:" type="Int64" />
+                <Field name="3419" source="CrossTab:Header:mcc_code:3419:Sum:" type="Int64" />
+                <Field name="3421" source="CrossTab:Header:mcc_code:3421:Sum:" type="Int64" />
+                <Field name="3438" source="CrossTab:Header:mcc_code:3438:Sum:" type="Int64" />
+                <Field name="3502" source="CrossTab:Header:mcc_code:3502:Sum:" type="Int64" />
+                <Field name="3508" source="CrossTab:Header:mcc_code:3508:Sum:" type="Int64" />
+                <Field name="3514" source="CrossTab:Header:mcc_code:3514:Sum:" type="Int64" />
+                <Field name="3522" source="CrossTab:Header:mcc_code:3522:Sum:" type="Int64" />
+                <Field name="3528" source="CrossTab:Header:mcc_code:3528:Sum:" type="Int64" />
+                <Field name="3550" source="CrossTab:Header:mcc_code:3550:Sum:" type="Int64" />
+                <Field name="3570" source="CrossTab:Header:mcc_code:3570:Sum:" type="Int64" />
+                <Field name="3605" source="CrossTab:Header:mcc_code:3605:Sum:" type="Int64" />
+                <Field name="3627" source="CrossTab:Header:mcc_code:3627:Sum:" type="Int64" />
+                <Field name="3640" source="CrossTab:Header:mcc_code:3640:Sum:" type="Int64" />
+                <Field name="3653" source="CrossTab:Header:mcc_code:3653:Sum:" type="Int64" />
+                <Field name="3659" source="CrossTab:Header:mcc_code:3659:Sum:" type="Int64" />
+                <Field name="3661" source="CrossTab:Header:mcc_code:3661:Sum:" type="Int64" />
+                <Field name="3686" source="CrossTab:Header:mcc_code:3686:Sum:" type="Int64" />
+                <Field name="3711" source="CrossTab:Header:mcc_code:3711:Sum:" type="Int64" />
+                <Field name="3712" source="CrossTab:Header:mcc_code:3712:Sum:" type="Int64" />
+                <Field name="3717" source="CrossTab:Header:mcc_code:3717:Sum:" type="Int64" />
+                <Field name="3749" source="CrossTab:Header:mcc_code:3749:Sum:" type="Int64" />
+                <Field name="3767" source="CrossTab:Header:mcc_code:3767:Sum:" type="Int64" />
+                <Field name="3774" source="CrossTab:Header:mcc_code:3774:Sum:" type="Int64" />
+                <Field name="3835" source="CrossTab:Header:mcc_code:3835:Sum:" type="Int64" />
+                <Field name="4121" source="CrossTab:Header:mcc_code:4121:Sum:" type="Int64" />
+                <Field name="5200" source="CrossTab:Header:mcc_code:5200:Sum:" type="Int64" />
+                <Field name="5211" source="CrossTab:Header:mcc_code:5211:Sum:" type="Int64" />
+                <Field name="5231" source="CrossTab:Header:mcc_code:5231:Sum:" type="Int64" />
+                <Field name="5251" source="CrossTab:Header:mcc_code:5251:Sum:" type="Int64" />
+                <Field name="5261" source="CrossTab:Header:mcc_code:5261:Sum:" type="Int64" />
+                <Field name="5271" source="CrossTab:Header:mcc_code:5271:Sum:" type="Int64" />
+                <Field name="5300" source="CrossTab:Header:mcc_code:5300:Sum:" type="Int64" />
+                <Field name="5309" source="CrossTab:Header:mcc_code:5309:Sum:" type="Int64" />
+                <Field name="5310" source="CrossTab:Header:mcc_code:5310:Sum:" type="Int64" />
+                <Field name="5311" source="CrossTab:Header:mcc_code:5311:Sum:" type="Int64" />
+                <Field name="5331" source="CrossTab:Header:mcc_code:5331:Sum:" type="Int64" />
+                <Field name="5399" source="CrossTab:Header:mcc_code:5399:Sum:" type="Int64" />
+                <Field name="5411" source="CrossTab:Header:mcc_code:5411:Sum:" type="Int64" />
+                <Field name="5422" source="CrossTab:Header:mcc_code:5422:Sum:" type="Int64" />
+                <Field name="5441" source="CrossTab:Header:mcc_code:5441:Sum:" type="Int64" />
+                <Field name="5451" source="CrossTab:Header:mcc_code:5451:Sum:" type="Int64" />
+                <Field name="5462" source="CrossTab:Header:mcc_code:5462:Sum:" type="Int64" />
+                <Field name="5499" source="CrossTab:Header:mcc_code:5499:Sum:" type="Int64" />
+                <Field name="5611" source="CrossTab:Header:mcc_code:5611:Sum:" type="Int64" />
+                <Field name="5621" source="CrossTab:Header:mcc_code:5621:Sum:" type="Int64" />
+                <Field name="5631" source="CrossTab:Header:mcc_code:5631:Sum:" type="Int64" />
+                <Field name="5641" source="CrossTab:Header:mcc_code:5641:Sum:" type="Int64" />
+                <Field name="5651" source="CrossTab:Header:mcc_code:5651:Sum:" type="Int64" />
+                <Field name="5655" source="CrossTab:Header:mcc_code:5655:Sum:" type="Int64" />
+                <Field name="5661" source="CrossTab:Header:mcc_code:5661:Sum:" type="Int64" />
+                <Field name="5681" source="CrossTab:Header:mcc_code:5681:Sum:" type="Int64" />
+                <Field name="5691" source="CrossTab:Header:mcc_code:5691:Sum:" type="Int64" />
+                <Field name="5697" source="CrossTab:Header:mcc_code:5697:Sum:" type="Int64" />
+                <Field name="5698" source="CrossTab:Header:mcc_code:5698:Sum:" type="Int64" />
+                <Field name="5699" source="CrossTab:Header:mcc_code:5699:Sum:" type="Int64" />
+                <Field name="5713" source="CrossTab:Header:mcc_code:5713:Sum:" type="Int64" />
+                <Field name="5714" source="CrossTab:Header:mcc_code:5714:Sum:" type="Int64" />
+                <Field name="5718" source="CrossTab:Header:mcc_code:5718:Sum:" type="Int64" />
+                <Field name="5719" source="CrossTab:Header:mcc_code:5719:Sum:" type="Int64" />
+                <Field name="5722" source="CrossTab:Header:mcc_code:5722:Sum:" type="Int64" />
+                <Field name="5732" source="CrossTab:Header:mcc_code:5732:Sum:" type="Int64" />
+                <Field name="5733" source="CrossTab:Header:mcc_code:5733:Sum:" type="Int64" />
+                <Field name="5734" source="CrossTab:Header:mcc_code:5734:Sum:" type="Int64" />
+                <Field name="5735" source="CrossTab:Header:mcc_code:5735:Sum:" type="Int64" />
+                <Field name="5811" source="CrossTab:Header:mcc_code:5811:Sum:" type="Int64" />
+                <Field name="5812" source="CrossTab:Header:mcc_code:5812:Sum:" type="Int64" />
+                <Field name="5813" source="CrossTab:Header:mcc_code:5813:Sum:" type="Int64" />
+                <Field name="5814" source="CrossTab:Header:mcc_code:5814:Sum:" type="Int64" />
+                <Field name="5815" source="CrossTab:Header:mcc_code:5815:Sum:" type="Int64" />
+                <Field name="5816" source="CrossTab:Header:mcc_code:5816:Sum:" type="Int64" />
+                <Field name="5817" source="CrossTab:Header:mcc_code:5817:Sum:" type="Int64" />
+                <Field name="5818" source="CrossTab:Header:mcc_code:5818:Sum:" type="Int64" />
+                <Field name="5832" source="CrossTab:Header:mcc_code:5832:Sum:" type="Int64" />
+                <Field name="5931" source="CrossTab:Header:mcc_code:5931:Sum:" type="Int64" />
+                <Field name="5932" source="CrossTab:Header:mcc_code:5932:Sum:" type="Int64" />
+                <Field name="5933" source="CrossTab:Header:mcc_code:5933:Sum:" type="Int64" />
+                <Field name="5935" source="CrossTab:Header:mcc_code:5935:Sum:" type="Int64" />
+                <Field name="5937" source="CrossTab:Header:mcc_code:5937:Sum:" type="Int64" />
+                <Field name="5941" source="CrossTab:Header:mcc_code:5941:Sum:" type="Int64" />
+                <Field name="5942" source="CrossTab:Header:mcc_code:5942:Sum:" type="Int64" />
+                <Field name="5943" source="CrossTab:Header:mcc_code:5943:Sum:" type="Int64" />
+                <Field name="5944" source="CrossTab:Header:mcc_code:5944:Sum:" type="Int64" />
+                <Field name="5946" source="CrossTab:Header:mcc_code:5946:Sum:" type="Int64" />
+                <Field name="5947" source="CrossTab:Header:mcc_code:5947:Sum:" type="Int64" />
+                <Field name="5949" source="CrossTab:Header:mcc_code:5949:Sum:" type="Int64" />
+                <Field name="5950" source="CrossTab:Header:mcc_code:5950:Sum:" type="Int64" />
+                <Field name="5960" source="CrossTab:Header:mcc_code:5960:Sum:" type="Int64" />
+                <Field name="5961" source="CrossTab:Header:mcc_code:5961:Sum:" type="Int64" />
+                <Field name="5962" source="CrossTab:Header:mcc_code:5962:Sum:" type="Int64" />
+                <Field name="5963" source="CrossTab:Header:mcc_code:5963:Sum:" type="Int64" />
+                <Field name="5964" source="CrossTab:Header:mcc_code:5964:Sum:" type="Int64" />
+                <Field name="5966" source="CrossTab:Header:mcc_code:5966:Sum:" type="Int64" />
+                <Field name="5967" source="CrossTab:Header:mcc_code:5967:Sum:" type="Int64" />
+                <Field name="5968" source="CrossTab:Header:mcc_code:5968:Sum:" type="Int64" />
+                <Field name="5969" source="CrossTab:Header:mcc_code:5969:Sum:" type="Int64" />
+                <Field name="5970" source="CrossTab:Header:mcc_code:5970:Sum:" type="Int64" />
+                <Field name="5971" source="CrossTab:Header:mcc_code:5971:Sum:" type="Int64" />
+                <Field name="5972" source="CrossTab:Header:mcc_code:5972:Sum:" type="Int64" />
+                <Field name="5973" source="CrossTab:Header:mcc_code:5973:Sum:" type="Int64" />
+                <Field name="5975" source="CrossTab:Header:mcc_code:5975:Sum:" type="Int64" />
+                <Field name="5976" source="CrossTab:Header:mcc_code:5976:Sum:" type="Int64" />
+                <Field name="5977" source="CrossTab:Header:mcc_code:5977:Sum:" type="Int64" />
+                <Field name="5983" source="CrossTab:Header:mcc_code:5983:Sum:" type="Int64" />
+                <Field name="5992" source="CrossTab:Header:mcc_code:5992:Sum:" type="Int64" />
+                <Field name="5993" source="CrossTab:Header:mcc_code:5993:Sum:" type="Int64" />
+                <Field name="5994" source="CrossTab:Header:mcc_code:5994:Sum:" type="Int64" />
+                <Field name="5996" source="CrossTab:Header:mcc_code:5996:Sum:" type="Int64" />
+                <Field name="5997" source="CrossTab:Header:mcc_code:5997:Sum:" type="Int64" />
+                <Field name="5999" source="CrossTab:Header:mcc_code:5999:Sum:" type="Int64" />
+                <Field name="7210" source="CrossTab:Header:mcc_code:7210:Sum:" type="Int64" />
+                <Field name="7211" source="CrossTab:Header:mcc_code:7211:Sum:" type="Int64" />
+                <Field name="7216" source="CrossTab:Header:mcc_code:7216:Sum:" type="Int64" />
+                <Field name="7217" source="CrossTab:Header:mcc_code:7217:Sum:" type="Int64" />
+                <Field name="7221" source="CrossTab:Header:mcc_code:7221:Sum:" type="Int64" />
+                <Field name="7230" source="CrossTab:Header:mcc_code:7230:Sum:" type="Int64" />
+                <Field name="7251" source="CrossTab:Header:mcc_code:7251:Sum:" type="Int64" />
+                <Field name="7261" source="CrossTab:Header:mcc_code:7261:Sum:" type="Int64" />
+                <Field name="7273" source="CrossTab:Header:mcc_code:7273:Sum:" type="Int64" />
+                <Field name="7276" source="CrossTab:Header:mcc_code:7276:Sum:" type="Int64" />
+                <Field name="7277" source="CrossTab:Header:mcc_code:7277:Sum:" type="Int64" />
+                <Field name="7278" source="CrossTab:Header:mcc_code:7278:Sum:" type="Int64" />
+                <Field name="7296" source="CrossTab:Header:mcc_code:7296:Sum:" type="Int64" />
+                <Field name="7297" source="CrossTab:Header:mcc_code:7297:Sum:" type="Int64" />
+                <Field name="7298" source="CrossTab:Header:mcc_code:7298:Sum:" type="Int64" />
+                <Field name="7299" source="CrossTab:Header:mcc_code:7299:Sum:" type="Int64" />
+                <Field name="7800" source="CrossTab:Header:mcc_code:7800:Sum:" type="Int64" />
+                <Field name="7801" source="CrossTab:Header:mcc_code:7801:Sum:" type="Int64" />
+                <Field name="7802" source="CrossTab:Header:mcc_code:7802:Sum:" type="Int64" />
+                <Field name="7832" source="CrossTab:Header:mcc_code:7832:Sum:" type="Int64" />
+                <Field name="7841" source="CrossTab:Header:mcc_code:7841:Sum:" type="Int64" />
+                <Field name="7911" source="CrossTab:Header:mcc_code:7911:Sum:" type="Int64" />
+                <Field name="7922" source="CrossTab:Header:mcc_code:7922:Sum:" type="Int64" />
+                <Field name="7929" source="CrossTab:Header:mcc_code:7929:Sum:" type="Int64" />
+                <Field name="7932" source="CrossTab:Header:mcc_code:7932:Sum:" type="Int64" />
+                <Field name="7933" source="CrossTab:Header:mcc_code:7933:Sum:" type="Int64" />
+                <Field name="7941" source="CrossTab:Header:mcc_code:7941:Sum:" type="Int64" />
+                <Field name="7991" source="CrossTab:Header:mcc_code:7991:Sum:" type="Int64" />
+                <Field name="7992" source="CrossTab:Header:mcc_code:7992:Sum:" type="Int64" />
+                <Field name="7993" source="CrossTab:Header:mcc_code:7993:Sum:" type="Int64" />
+                <Field name="7994" source="CrossTab:Header:mcc_code:7994:Sum:" type="Int64" />
+                <Field name="7995" source="CrossTab:Header:mcc_code:7995:Sum:" type="Int64" />
+                <Field name="7996" source="CrossTab:Header:mcc_code:7996:Sum:" type="Int64" />
+                <Field name="7997" source="CrossTab:Header:mcc_code:7997:Sum:" type="Int64" />
+                <Field name="7998" source="CrossTab:Header:mcc_code:7998:Sum:" type="Int64" />
+                <Field name="7999" source="CrossTab:Header:mcc_code:7999:Sum:" type="Int64" />
+              </RecordInfo>
+              <SortInfo>
+                <Field field="customer_id" order="Asc" />
+              </SortInfo>
+            </MetaInfo>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxCrossTab" />
+        </Node>
+        <Node ToolID="40">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1542" y="426" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_f7967bc1c6864d798f593050f81d0c23_.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Profile</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="41">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1446" y="510" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_5b8465024b3041b186c35019e74e061b_.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Profile</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="42">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.CrossTab.CrossTab">
+            <Position x="1254" y="426" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <GroupFields>
+                <Field field="customer_id" />
+              </GroupFields>
+              <HeaderField field="Month" />
+              <DataField field="month_trans_count" />
+              <Methods>
+                <Method method="Sum" />
+              </Methods>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+            <MetaInfo connection="Output">
+              <RecordInfo>
+                <Field name="customer_id" size="255" source="CrossTab:Group:Sum:" type="V_String" />
+                <Field name="April" source="CrossTab:Header:Month:April:Sum:" type="Int64" />
+                <Field name="August" source="CrossTab:Header:Month:August:Sum:" type="Int64" />
+                <Field name="February" source="CrossTab:Header:Month:February:Sum:" type="Int64" />
+                <Field name="January" source="CrossTab:Header:Month:January:Sum:" type="Int64" />
+                <Field name="July" source="CrossTab:Header:Month:July:Sum:" type="Int64" />
+                <Field name="June" source="CrossTab:Header:Month:June:Sum:" type="Int64" />
+                <Field name="March" source="CrossTab:Header:Month:March:Sum:" type="Int64" />
+                <Field name="May" source="CrossTab:Header:Month:May:Sum:" type="Int64" />
+                <Field name="November" source="CrossTab:Header:Month:November:Sum:" type="Int64" />
+                <Field name="October" source="CrossTab:Header:Month:October:Sum:" type="Int64" />
+                <Field name="September" source="CrossTab:Header:Month:September:Sum:" type="Int64" />
+              </RecordInfo>
+              <SortInfo>
+                <Field field="customer_id" order="Asc" />
+              </SortInfo>
+            </MetaInfo>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxCrossTab" />
+        </Node>
+        <Node ToolID="43">
+          <GuiSettings>
+            <Position x="1446" y="426" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Value name="List Box (11)">"customer_id"</Value>
+              <Value name="Check Box (84)">True</Value>
+              <Value name="Check Box (117)">True</Value>
+              <Value name="Check Box (15)">True</Value>
+              <Value name="Check Box (109)">False</Value>
+              <Value name="Check Box (122)">False</Value>
+              <Value name="Check Box (53)">False</Value>
+              <Value name="Check Box (58)">False</Value>
+              <Value name="Check Box (70)">False</Value>
+              <Value name="Check Box (77)">False</Value>
+              <Value name="Drop Down (81)">upper</Value>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+            <Dependencies>
+              <Implicit />
+            </Dependencies>
+          </Properties>
+          <EngineSettings Macro="Cleanse.yxmc" />
+        </Node>
+        <Node ToolID="44">
+          <GuiSettings>
+            <Position x="1350" y="510" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Value name="List Box (11)">"customer_id","Airlines","AmusementParks_Carnivals","AntiqueReproductions","AntiqueShops","Aquariums","ArtDealersandGalleries","Artist_sSupplyandCraftShops","Bakeries","Bands_Orchestras","BarberandBeautyShops","Betting_CasinoGambling","Billiard_PoolEstablishments","BookStores","BowlingAlleys","Buying_ShoppingServices","CameraandPhotographicSupplyStores","Candy_Nut_andConfectioneryStores","Carpet_UpholsteryCleaning","CarRental","Caterers","Children_sandInfant_sWearStores","CigarStoresandStands","ClothingRental","ComputerSoftwareStores","CosmeticStores","CounselingServices","CountryClubs","DairyProductsStores","DanceHall_Studios_Schools","Dating_EscortServices","DepartmentStores","DigitalGoods","DirectMarketing_CatalogMerchant","DirectMarketing_InboundTele","DirectMarketing_InsuranceServices","DirectMarketing_Other","DirectMarketing_OutboundTele","DirectMarketing_Subscription","DirectMarketing_Travel","DiscountStores","Door_To_DoorSales","Drapery_WindowCovering_andUpholsteryStores","DrinkingPlaces","DryCleaners","DutyFreeStores","EatingPlaces_Restaurants","ElectricRazorStores","ElectronicsStores","FamilyClothingStores","FastFoodRestaurants","Fireplace_FireplaceScreens_andAccessoriesStores","FloorCoveringStores","Florists","FreezerandLockerMeatProvisioners","FuelDealers_NonAutomotive_","FuneralServices_Crematories","FurriersandFurShops","Gift_Card_Novelty_andSouvenirShops","Glass_Paint_andWallpaperStores","Glassware_CrystalStores","GolfCourses_Public","GovernmentServices","GroceryStores_Supermarkets","HardwareStores","HealthandBeautySpas","HearingAidsSalesandSupplies","HomeSupplyWarehouseStores","Hotels_Motels_Inns_Resorts","HouseholdApplianceStores","JewelryStores_Watches_Clocks_andSilverwareStores","Laundries","Laundry_CleaningServices","Lumber_BuildingMaterialsStores","MailOrder","MassageParlors","Men_sClothingStores","MenWomenClothingStores","MiscellaneousApparelandAccessoryShops","MiscellaneousFoodStores_ConvenienceStoresandSpecialtyMarkets","MiscellaneousGeneralMerchandise","MiscellaneousGeneralServices","MiscellaneousHomeFurnishingSpecialtyStores","MiscellaneousRecreationServices","MiscellaneousSpecialtyRetail","MobileHomeDealers","MotionPictureTheaters","MusicStores_MusicalInstruments_Pianos_andSheetMusic","NA","NewsDealersandNewsstands","Nurseries_LawnandGardenSupplyStores","OrthopedicGoods_ProstheticDevices","PawnShops","PhotographicStudios","RecordStores","ReligiousGoodsStores","Sewing_Needlework_Fabric_andPieceGoodsStores","ShoeRepair_HatCleaning","ShoeStores","SportingGoodsStores","SportsandRidingApparelStores","SportsClubs_Fields","StampandCoinStores","StationeryStores_Office_andSchoolSupplyStores","SwimmingPoolsSales","Tailors_Alterations","Taxicabs_Limousines","TaxPreparationServices","TheatricalTicketAgencies","TouristAttractionsandExhibits","UsedMerchandiseandSecondhandStores","VarietyStores","VideoAmusementGameSupplies","VideoGameArcades","VideoTapeRentalStores","WholesaleClubs","WigandToupeeStores","Women_sClothingStores","WreckingandSalvageYards"</Value>
+              <Value name="Check Box (84)">True</Value>
+              <Value name="Check Box (117)">True</Value>
+              <Value name="Check Box (15)">True</Value>
+              <Value name="Check Box (109)">False</Value>
+              <Value name="Check Box (122)">False</Value>
+              <Value name="Check Box (53)">False</Value>
+              <Value name="Check Box (58)">False</Value>
+              <Value name="Check Box (70)">False</Value>
+              <Value name="Check Box (77)">False</Value>
+              <Value name="Drop Down (81)">upper</Value>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings Macro="Cleanse.yxmc" />
+        </Node>
+        <Node ToolID="45">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.JoinMultiple.JoinMultiple">
+            <Position x="1578" y="438" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <JoinByRecPos value="False" />
+              <JoinFields>
+                <JoinInfo connection="#1">
+                  <Field field="customer_id" />
+                </JoinInfo>
+                <JoinInfo connection="#2">
+                  <Field field="customer_id" />
+                </JoinInfo>
+                <JoinInfo connection="#3">
+                  <Field field="customer_id" />
+                </JoinInfo>
+              </JoinFields>
+              <CartesianMode>Error</CartesianMode>
+              <OutputJoinOnly value="False" />
+              <SelectConfiguration>
+                <Configuration outputConnection="Output">
+                  <OrderChanged value="False" />
+                  <CommaDecimal value="False" />
+                  <SelectFields>
+                    <SelectField field="Input_#3_customer_id" selected="False" />
+                    <SelectField field="Input_#2_customer_id" selected="False" />
+                    <SelectField field="*Unknown" selected="True" />
+                  </SelectFields>
+                </Configuration>
+              </SelectConfiguration>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJoinMultiple" />
+        </Node>
+        <Node ToolID="46">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1770" y="438" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\kvibhaas\AppData\Local\Temp\Engine_9620_8e94f32e2d34401ca2b524c16a7cfcf8_\Engine_2600_d843f94d59394e22a9f3d44de283217a_.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Profile</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="104">
+          <GuiSettings>
+            <Position x="1350" y="426" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Value name="listbox Select Incoming Fields">"April","August","February","January","July","June","March","May","November","October","September"</Value>
+              <Value name="radio Null Value">True</Value>
+              <Value name="radio User Specified Replace From Value">False</Value>
+              <Value name="updown User Replace Value">0.00000</Value>
+              <Value name="radio Mean">False</Value>
+              <Value name="radio Median">False</Value>
+              <Value name="radio Mode">False</Value>
+              <Value name="radio User Specified Replace With Value">True</Value>
+              <Value name="updown User Replace With Value">0.00000</Value>
+              <Value name="checkbox Impute Indicator">False</Value>
+              <Value name="checkbox Imputed Values Separate Field">False</Value>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+            <Dependencies>
+              <Implicit />
+            </Dependencies>
+            <MetaInfo connection="Output">
+              <RecordInfo>
+                <Field name="customer_id" size="255" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="V_String" />
+                <Field name="April" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="August" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="February" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="January" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="July" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="June" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="March" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="May" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="November" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="October" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+                <Field name="September" source="Formula: IF &#xA;REGEX_Match([_CurrentFieldName_], '.*(?:_Ind).*') &amp;&amp; IsNull([_CurrentField_]) THEN &#xA;  0 &#xA;ELSE &#xA;  [_CurrentField_] &#xA;ENDIF" type="Double" />
+              </RecordInfo>
+            </MetaInfo>
+          </Properties>
+          <EngineSettings Macro="Imputation_v2.yxmc" />
+        </Node>
+      </ChildNodes>
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="1" Connection="Output" />
+      <Destination ToolID="9" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="11" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="11" Connection="Output" />
+      <Destination ToolID="12" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="12" Connection="Output" />
+      <Destination ToolID="13" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="13" Connection="Output" />
+      <Destination ToolID="27" Connection="Left" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="26" Connection="Output" />
+      <Destination ToolID="27" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="14" Connection="Output26" />
+      <Destination ToolID="19" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="14" Connection="Output26" />
+      <Destination ToolID="21" Connection="Left" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="91" Connection="Output" />
+      <Destination ToolID="21" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="15" Connection="Output" />
+      <Destination ToolID="16" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="16" Connection="Output" />
+      <Destination ToolID="17" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="17" Connection="Output" />
+      <Destination ToolID="18" Connection="Input2" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="18" Connection="Output26" />
+      <Destination ToolID="20" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="18" Connection="Output26" />
+      <Destination ToolID="90" Connection="Left" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="31" Connection="Output" />
+      <Destination ToolID="90" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="21" Connection="Join" />
+      <Destination ToolID="23" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="21" Connection="Left" />
+      <Destination ToolID="24" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="21" Connection="Right" />
+      <Destination ToolID="25" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="21" Connection="Join" />
+      <Destination ToolID="34" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="21" Connection="Join" />
+      <Destination ToolID="36" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="21" Connection="Join" />
+      <Destination ToolID="37" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="21" Connection="Join" />
+      <Destination ToolID="92" Connection="Input" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="27" Connection="Join" />
+      <Destination ToolID="28" Connection="Input" />
+    </Connection>
+    <Connection name="#2">
+      <Origin ToolID="27" Connection="Left" />
+      <Destination ToolID="28" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="28" Connection="Output" />
+      <Destination ToolID="32" Connection="Left" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="31" Connection="Output" />
+      <Destination ToolID="32" Connection="Right" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="30" Connection="Output" />
+      <Destination ToolID="14" Connection="Input2" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="32" Connection="Join" />
+      <Destination ToolID="33" Connection="Input" />
+    </Connection>
+    <Connection name="#2">
+      <Origin ToolID="32" Connection="Left" />
+      <Destination ToolID="33" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="33" Connection="Output" />
+      <Destination ToolID="30" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="87" Connection="Output" />
+      <Destination ToolID="88" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="87" Connection="Output" />
+      <Destination ToolID="89" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="87" Connection="Output" />
+      <Destination ToolID="96" Connection="Input" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="90" Connection="Join" />
+      <Destination ToolID="95" Connection="Input" />
+    </Connection>
+    <Connection name="#2">
+      <Origin ToolID="90" Connection="Left" />
+      <Destination ToolID="95" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="92" Connection="Output" />
+      <Destination ToolID="93" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="93" Connection="Output" />
+      <Destination ToolID="94" Connection="Input2" />
+    </Connection>
+    <Connection name="#4">
+      <Origin ToolID="94" Connection="Output26" />
+      <Destination ToolID="87" Connection="Input" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="101" Connection="Output" />
+      <Destination ToolID="87" Connection="Input" />
+    </Connection>
+    <Connection name="#2">
+      <Origin ToolID="43" Connection="Output26" />
+      <Destination ToolID="87" Connection="Input" />
+    </Connection>
+    <Connection name="#3">
+      <Origin ToolID="44" Connection="Output26" />
+      <Destination ToolID="87" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="95" Connection="Output" />
+      <Destination ToolID="91" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="96" Connection="Output" />
+      <Destination ToolID="97" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="98" Connection="Reports" />
+      <Destination ToolID="99" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="100" Connection="Output" />
+      <Destination ToolID="101" Connection="First Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="34" Connection="Output" />
+      <Destination ToolID="101" Connection="Second Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="100" Connection="Reports" />
+      <Destination ToolID="103" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="101" Connection="Output" />
+      <Destination ToolID="102" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="34" Connection="Output" />
+      <Destination ToolID="39" Connection="Input" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="34" Connection="Output" />
+      <Destination ToolID="45" Connection="Input" />
+    </Connection>
+    <Connection name="#2">
+      <Origin ToolID="43" Connection="Output26" />
+      <Destination ToolID="45" Connection="Input" />
+    </Connection>
+    <Connection name="#3">
+      <Origin ToolID="44" Connection="Output26" />
+      <Destination ToolID="45" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="34" Connection="Output" />
+      <Destination ToolID="98" Connection="Data Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="34" Connection="Output" />
+      <Destination ToolID="100" Connection="Data Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="36" Connection="Output" />
+      <Destination ToolID="42" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="37" Connection="Output" />
+      <Destination ToolID="38" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="38" Connection="Output" />
+      <Destination ToolID="44" Connection="Input2" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="42" Connection="Output" />
+      <Destination ToolID="104" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="43" Connection="Output26" />
+      <Destination ToolID="40" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="44" Connection="Output26" />
+      <Destination ToolID="41" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="45" Connection="Output" />
+      <Destination ToolID="46" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="104" Connection="Output" />
+      <Destination ToolID="43" Connection="Input2" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>Data Preparation_0.7</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>
